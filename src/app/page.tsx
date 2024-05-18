@@ -1,49 +1,62 @@
 "use client"
 
-import { genAI } from "@/lib/ai"
-import { GoogleGenerativeAI } from "@google/generative-ai"
-import { FormEvent, useState } from "react"
-
-type Message = {
-  msg: string
-  from: "ai" | "user"
-}
+import DropZone from "@/components/DropZone"
+import { Pdf } from "@/types"
+import { useState } from "react"
+import { DropEvent, FileRejection } from "react-dropzone"
+import { useMutation } from "@tanstack/react-query"
+import Chat from "@/components/Chat"
 
 export default function Home() {
-  const [prompt, setPrompt] = useState("")
-  const [messages, setMessages] = useState<Message[]>([])
+  const [pdf, setPdf] = useState<Pdf | null>(null)
+  const [err, setErr] = useState("")
 
-  const askAI = async (ev: FormEvent) => {
-    ev.preventDefault()
+  //upload file
+  const uploadFile = useMutation({
+    mutationFn: async (file: File) => {
+      try {
+        const formData = new FormData()
+        formData.append("pdf", file)
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        })
+        const pdf = (await res.json()) as Pdf
+        setPdf(pdf)
+      } catch(err) {
+        setErr("error uploading your file")
+      }
+    },
+  })
 
-    // Add user message to messages state
-    setMessages(prevMessages => [...prevMessages, { msg: prompt, from: "user" }])
+  if (uploadFile.error) setErr("Error uploading the file")
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+  const handleDropRejected = () => {
+    setErr("File type not allowed")
+  }
 
-    const result = await model.generateContent(prompt)
-    const msg = result.response.text()
-
-    // Add AI response to messages state
-    setPrompt("")
-    setMessages(prevMessages => [...prevMessages, { msg, from: "ai" }])
+  const handleDropAccepted = (acceptedFiles: File[]) => {
+    uploadFile.mutate(acceptedFiles[0])
   }
 
   return (
     <main className="max-w-2xl m-auto flex flex-col">
-      <header className="fixed top-0 bg-black border-zinc-500 w-2xl border p-3 text-lg" style={{ width: 672, maxWidth: "100%" }}>PDX2</header>
-      <ul className="text-lg min-h-screen border-zinc-500 border overflow-auto pb-24 pt-16 flex flex-col">
-        {messages.map((msg, idx) => (
-          <li key={idx} className="py-1.5 px-6 flex flex-col">
-            <span className={msg.from === "ai" ? "text-blue-500" : ""}><b>{msg.from}:</b></span>
-            <p>{msg.msg}</p>
-          </li>
-        ))}
-      </ul>
-      <form action="" className="text-xl flex fixed bottom-0 p-3 border-zinc-500 border gap-1.5 bg-black" style={{ width: 672, maxWidth: "100%" }}>
-        <input type="text" className="px-3 rounded-lg w-full" placeholder="Prompt..." value={prompt} onChange={(ev) => setPrompt(ev.target.value)} />
-        <button onClick={(ev) => askAI(ev)} className="px-4 py-2 rounded-lg bg-zinc-900" disabled={prompt === ""}>ask</button>
-      </form>
-    </main >
+      {pdf ? (
+        <Chat />
+      ) : (
+        <>
+          <div className="mt-56 text-center mb-2 "><span className="rounded-2xl border px-4 py-1"><span className="text-orange-500 font-bold">PDX v2</span> is here!</span></div>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-5 md:mb-10 px-6">
+            Chat with your PDFs with just an upload!
+          </h1>
+          <DropZone
+            pending={uploadFile.isPending}
+            error={err}
+            onDropAccepted={handleDropAccepted}
+            onDropRejected={handleDropRejected}
+          />
+        </>
+      )}
+    </main>
   )
 }
