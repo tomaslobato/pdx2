@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
   const { secure_url, pages, public_id } = uploadedFile
 
   const res = await fetch(secure_url)
-  console.log("FETCH:",res)
   const blob = await res.blob()
 
   //upload to pinecone
@@ -48,11 +47,8 @@ export async function POST(req: NextRequest) {
     const pineconeIndex = pinecone.index("pdx")
 
     const embeddings = new GoogleGenerativeAIEmbeddings({
-      apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+      apiKey: process.env.GEMINI_KEY,
     })
-    console.log("EMBEDDINGS:",embeddings)
-    console.log("pineconeIndex:",pineconeIndex)
-    console.log("pageLevelDocs:",pageLevelDocs)
 
     await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
       pineconeIndex,

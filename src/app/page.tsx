@@ -9,7 +9,7 @@ import Chat from "@/components/Chat"
 
 export default function Home() {
   const [pdf, setPdf] = useState<Pdf | null>(null)
-  const [err, setErr] = useState("")
+  const [err, setErr] = useState<string|null>(null)
 
   //upload file
   const uploadFile = useMutation({
