@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     const loader = new PDFLoader(blob)
     const pageLevelDocs = await loader.load()
 
-    const pineconeIndex = pinecone.index("pdx")
+    const pineconeIndex = pinecone.index("pdx2")
 
     const embeddings = new GoogleGenerativeAIEmbeddings({
       apiKey: process.env.GEMINI_KEY,

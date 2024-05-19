@@ -15,6 +15,7 @@
     "@langchain/pinecone": "^0.0.6",
     "@pinecone-database/pinecone": "^2.2.1",
     "@tanstack/react-query": "^5.36.2",
+    "axios": "^1.6.8",
     "cloudinary": "^2.2.0",
     "next": "14.2.3",
     "react": "^18",

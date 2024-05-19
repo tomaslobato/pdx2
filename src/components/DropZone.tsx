@@ -38,14 +38,13 @@ const DropZone = ({
   return (
     <div
       {...getRootProps()}
-      className={`bg-zinc-800 hover:bg-zinc-900 transition-all cursor-pointer h-[150px] md:h-[200px] rounded-2xl flex items-center justify-center text-2xl mx-6 px-5 text-center border-dashed border-2 ${error !== "" ? "bg-red-800 hover:bg-red-800 disabled" : ""
-        }`}
+      className={`bg-zinc-800 hover:bg-zinc-900 transition-all cursor-pointer h-[150px] md:h-[200px] rounded-2xl flex items-center justify-center text-2xl mx-6 px-5 text-center border-dashed border-2`}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} disabled={error ? true : false || pending} />
       {isDragActive ? (
         <p>Drop the PDF file here...</p>
       ) : error ? (
-        <p>File not allowed</p>
+        <p className="text-red-600 font-bold">{error}</p>
       ) : pending ? (
         <LoadingIcon size={48} className="animate-spin" />
       ) : (
