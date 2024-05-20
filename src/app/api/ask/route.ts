@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   \n-----------------------------\n
   USER INPUT: ${prompt}
   `)
-  const text = res.response.text()
+  const text = res.response.text()  
 
   return NextResponse.json({ parts: [{ text }], role: "model" })
 }
