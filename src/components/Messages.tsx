@@ -30,7 +30,7 @@ export default function Messages({ messages, ask }: Props) {
         >
           {msg.parts[0].text === "" ? (
             <div className="bg-red-500 rounded-2xl p-3 w-80">
-              <p>There was an error, don't worry and try again.</p>
+              <p>There was an error, don&apos;st worry and try again.</p>
             </div>
           ) : (
             <div
