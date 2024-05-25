@@ -4,7 +4,6 @@ export type Message = {
 }
 
 export type Pdf = {
-  pages: number
   secure_url: string
   public_id: string
   name: string

@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json(
-    { name: file.name, secure_url, pages, public_id },
+    { name: file.name, secure_url, public_id },
     { status: 200 }
   )
 }

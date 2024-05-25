@@ -59,7 +59,7 @@ export default function Chat({ pdf }: Props) {
         <a
           href={pdf.secure_url}
           target="_blank"
-          className="p-2 rounded-xl border text-sm"
+          className="p-2 rounded-xl border-2 border-zinc-500 bg-zinc-900 hover:bg-zinc-950 hover:border-white"
         >
           See PDF
         </a>
@@ -75,19 +75,19 @@ export default function Chat({ pdf }: Props) {
         <input
           type="text"
           disabled={ask.isPending}
-          className={`md:text-lg px-3 rounded-lg w-full ${
-            err ? "border-2 border-red-600" : ""
+          className={`md:text-xl px-3 rounded-lg w-full border-2 border-zinc-950 bg-zinc-900 hover:bg-zinc-950 hover:border-white ${
+            err ? " border-red-600" : ""
           }`}
-          placeholder="Pregunta sobre el PDF..."
+          placeholder="Ask about PDF..."
           value={prompt}
           onChange={(ev) => setPrompt(ev.target.value)}
         />
         <button
           onClick={(ev) => handleSubmit(ev)}
           disabled={ask.isPending || prompt === ""}
-          className="px-4 py-2 rounded-lg bg-zinc-900"
+          className="px-4 py-2 rounded-lg bg-orange-600 border-orange-950 border-2 cursor-pointer hover:bg-orange-700 hover:border-white"
         >
-          <SendIcon size={23} className="" />
+          <SendIcon size={25} className="" />
         </button>
       </form>
     </>

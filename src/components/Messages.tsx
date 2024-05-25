@@ -37,7 +37,7 @@ export default function Messages({ messages, ask }: Props) {
               className={`rounded-2xl flex p-3 max-w-sm md:max-w-xl gap-1 ${
                 msg.role === "user"
                   ? "rounded-tr-none bg-zinc-700"
-                  : "rounded-bl-none bg-zinc-800"
+                  : "rounded-bl-none bg-orange-700"
               }`}
             >
               <p>{msg.parts[0].text}</p>

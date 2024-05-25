@@ -13,12 +13,21 @@ export async function POST(req: NextRequest) {
   })
   const pineconeIndex = pinecone.index("pdx2")
 
-  const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
-    pineconeIndex,
-    namespace: fileId,
-  })
+  let results
+  try {
+    const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex,
+      namespace: fileId,
+    })
 
-  const results = await vectorStore.similaritySearch(prompt, 8)
+    results = await vectorStore.similaritySearch(prompt, 8)
+  } catch (err) {
+    console.error("Error occurred getting file from Pinecone:", err)
+    return NextResponse.json(
+      { error: "An error occurred while processing your request." },
+      { status: 500 }
+    )
+  }
 
   const model = genAI.getGenerativeModel({
     model: "gemini-pro",
@@ -49,17 +58,24 @@ export async function POST(req: NextRequest) {
     },
   })
 
-  const res = await chat.sendMessage(`
-  Use the context (PDF document in flat text), and the previous conversation if necessary, to answer the user's question in Markdown format. \n
-  Maintain a comprehensive conversation with the user. Never respond with nothing, try to give the user context of what's happening.
-  \n-----------------------------\n
-  CONTEXT: ${results
-    .map((r, i) => `Page ${i}:\n ${r.pageContent}`)
-    .join(`\n\n`)}
-  \n-----------------------------\n
-  USER INPUT: ${prompt}
-  `)
-  const text = res.response.text()  
-
-  return NextResponse.json({ parts: [{ text }], role: "model" })
+  try {
+    const res = await chat.sendMessage(`
+      Use the context (PDF document in flat text), and the previous conversation if necessary, to answer the user's question in Markdown format.
+      Maintain a comprehensive conversation with the user. Never respond with nothing, try to give the user context of what's happening.
+      -----------------------------
+      CONTEXT: ${results
+        .map((r, i) => `Page ${i}:\n ${r.pageContent}`)
+        .join(`\n\n`)}
+      -----------------------------
+      USER INPUT: ${prompt}
+    `)
+    const text = res.response.text()
+    return NextResponse.json({ parts: [{ text }], role: "model" })
+  } catch (err) {
+    console.error("Error occurred during AI chat:", err)
+    return NextResponse.json(
+      { error: "An error occurred while processing your request." },
+      { status: 500 }
+    )
+  }
 }
