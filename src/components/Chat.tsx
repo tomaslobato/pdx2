@@ -86,7 +86,7 @@ export default function Chat({ pdf }: Props) {
         <button
           onClick={(ev) => handleSubmit(ev)}
           disabled={ask.isPending || prompt === ""}
-          className="px-4 py-2 rounded-lg bg-orange-600 border-orange-950 border-2 cursor-pointer hover:bg-orange-700 hover:border-white"
+          className="px-3 rounded-lg bg-orange-700 border-orange-800 border-2 cursor-pointer hover:bg-orange-800"
         >
           <SendIcon size={25} className="" />
         </button>
