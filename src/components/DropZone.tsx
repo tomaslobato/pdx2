@@ -38,7 +38,7 @@ const DropZone = ({
   return (
     <div
       {...getRootProps()}
-      className={` hover:bg-zinc-900 bg-zinc-800 transition-all cursor-pointer h-[240px] rounded-2xl flex items-center justify-center text-3xl mx-5 px-5 text-center border-zinc-400 border-dashed border-4`}
+      className={` hover:bg-zinc-900 bg-zinc-800 transition-all cursor-pointer h-[240px] rounded-2xl flex items-center justify-center text-2xl mx-5 px-5 text-center border-zinc-400 border-dashed border-4`}
     >
       <input {...getInputProps()} disabled={error ? true : false || pending} />
       {isDragActive ? (
