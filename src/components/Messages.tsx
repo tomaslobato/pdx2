@@ -4,6 +4,7 @@ import { Message } from "@/types"
 import LoadingIcon from "./Icons/Loading"
 import { UseMutationResult } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
+import ReactMarkdown from "react-markdown"
 
 type Props = {
   messages: Message[]
@@ -34,13 +35,14 @@ export default function Messages({ messages, ask }: Props) {
             </div>
           ) : (
             <div
-              className={`rounded-2xl flex p-3 max-w-sm md:max-w-xl gap-1 ${
+              className={`rounded-2xl flex flex-col p-3 max-w-sm md:max-w-xl gap-1 ${
                 msg.role === "user"
                   ? "rounded-tr-none bg-zinc-700"
                   : "rounded-bl-none bg-orange-700"
               }`}
+              onClick={() => console.log(msg.parts[0].text)}
             >
-              <p>{msg.parts[0].text}</p>
+                <ReactMarkdown>{msg.parts[0].text}</ReactMarkdown>
             </div>
           )}
         </li>

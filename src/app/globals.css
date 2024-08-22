@@ -7,7 +7,3 @@ body {
   background-color: #09090b;
   color:white
 }
-
-#chat-form:focus-within {
-  padding-bottom: 250px;
-}
