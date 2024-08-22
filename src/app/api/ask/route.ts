@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
   const chat = model.startChat({
     history: prevMessages,
     generationConfig: {
-      maxOutputTokens: 100,
+      maxOutputTokens: 500,
     },
   })
 
@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
     const res = await chat.sendMessage(`
       Use the context (PDF document in flat text), and the previous conversation if necessary, to answer the user's question in Markdown format.
       Maintain a comprehensive conversation with the user. Never respond with nothing, try to give the user context of what's happening.
+      Answer in around 200 words.
       -----------------------------
       CONTEXT: ${results
         .map((r, i) => `Page ${i}:\n ${r.pageContent}`)

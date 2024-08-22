@@ -58,7 +58,7 @@ export default function Home() {
               <span className="text-orange-500 font-bold">PDX v2</span> is here!
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-5 md:mb-10 px-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 px-6">
             Chat with your PDFs with just an upload!
           </h1>
           <DropZone

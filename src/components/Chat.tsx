@@ -50,7 +50,7 @@ export default function Chat({ pdf }: Props) {
   return (
     <>
       <header
-        className="fixed top-0 bg-black w-2xl  h-14 flex justify-between items-center p-3"
+        className="fixed top-0 bg-zinc-900 w-2xl  h-14 flex justify-between items-center p-3"
         style={{ width: 672, maxWidth: "100%" }}
       >
         <span className="rounded-full bg-zinc-700 px-3 max-w-[230px] md:max-w-xl h-6 truncate">
@@ -69,14 +69,14 @@ export default function Chat({ pdf }: Props) {
       {/* input */}
       <form
         id="chat-form"
-        className="flex fixed bottom-0 p-3 gap-1.5 bg-black"
+        className="flex fixed bottom-0 p-3 gap-1.5 bg-zinc-900"
         style={{ width: 672, maxWidth: "100%" }}
       >
         <input
           type="text"
           id="chat-input"
           disabled={ask.isPending}
-          className={`md:text-xl px-3 rounded-lg w-full border-2 border-zinc-950 bg-zinc-900 hover:bg-zinc-950 hover:border-white ${
+          className={`h-12 md:text-xl px-3 rounded-lg w-full bg-zinc-950 ${
             err ? " border-red-600" : ""
           }`}
           placeholder="Ask about PDF..."
