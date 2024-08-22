@@ -3,7 +3,6 @@
 import DropZone from "@/components/DropZone"
 import { Pdf } from "@/types"
 import { useState } from "react"
-import { DropEvent, FileRejection } from "react-dropzone"
 import { useMutation } from "@tanstack/react-query"
 import Chat from "@/components/Chat"
 import axios from "axios"

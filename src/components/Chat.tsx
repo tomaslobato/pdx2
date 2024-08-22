@@ -68,12 +68,13 @@ export default function Chat({ pdf }: Props) {
       <Messages messages={messages} ask={ask}/>
       {/* input */}
       <form
-        action=""
+        id="chat-form"
         className="flex fixed bottom-0 p-3 gap-1.5 bg-black"
         style={{ width: 672, maxWidth: "100%" }}
       >
         <input
           type="text"
+          id="chat-input"
           disabled={ask.isPending}
           className={`md:text-xl px-3 rounded-lg w-full border-2 border-zinc-950 bg-zinc-900 hover:bg-zinc-950 hover:border-white ${
             err ? " border-red-600" : ""
